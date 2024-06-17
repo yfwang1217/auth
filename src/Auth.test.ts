@@ -6,9 +6,14 @@ import Auth from '../src/Auth';
 import { describe, it, before } from 'mocha';
 
 let app: FastifyInstance;
+
+before(async () => {
+  await NetworkCore.start();
+  app = NetworkCore.fastifyApp;
+});
   describe('Auth Module', () => {
     it('should return 200 for valid login', async () => {
-      const res = await request(NetworkCore.fastifyApp)
+      const res = await request(app)
         .get('/auth/login')
         .query({ email: 'test@example.com' });
   
